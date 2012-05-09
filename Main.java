@@ -40,7 +40,7 @@ public class Main {
                if(vet[i]==j){ //mesma coluna
                     cont++;
                 }
-                if ((vet[j] == vet[i] + x) || (vet[j] == vet[i] - x) || (vet[j])==vet[i])) {
+                if ((vet[j] == vet[i] + x) || (vet[j] == vet[i] - x) || (vet[j] ==vet[i])) {
                     cont++;
                 }
                 x++;
