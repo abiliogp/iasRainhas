@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.TreeMap;
 
 /*
  * To change this template, choose Tools | Templates
@@ -12,10 +13,18 @@ import java.lang.reflect.Array;
 public class Tabuleiro {
     private int position[];
     private int attack;
-    public void Tabuleiro(int entrada[]){
+    public Tabuleiro(int entrada[]){
        this.position=(entrada);//verificar se vai pegar certo
        //metodo que verifica os ataques
     }
+    /*
+     * Metodo get do numero de rainhas se atacando no tabuleiro
+     */
+    public int getAttack(){
+    	return this.attack;
+    }
+    
+    
     /*
      * Metodo responsavel por contar o numero de rainhas se atacando e setar 
      * o valor de attack 
@@ -56,6 +65,11 @@ public class Tabuleiro {
         }
         return cont;  //retorna quantas rainhas foram atacadas
     }
+	public int[] getPosition() {
+		// TODO Auto-generated method stub
+		return this.position;
+	}
+
          
     
 }
