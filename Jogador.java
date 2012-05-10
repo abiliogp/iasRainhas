@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.TreeMap;
 
-
+//jogador
 public class Jogador {
 	private List<Tabuleiro> tabuleiros;
 	private TreeMap<String,Tabuleiro>last;
