@@ -32,20 +32,10 @@ public class Tabuleiro {
     }
     
     
-    /*
-     * Metodo responsavel por contar o numero de rainhas se atacando e setar 
-     * o valor de attack 
-     * P@rametros: void
-     * Return: void
-     */
-    public void attackingqueen(){
-        //implementar
-    }
-    public void Aestrela(){
-    	
-    }
     
-    //Precisa testar.......................
+    /*
+     * Função q de avaliação
+     */
     public int avalia_rainhas() {
         int []vet=this.position;
         int cont = 0; //contador de rainhas que se atacam
@@ -69,10 +59,12 @@ public class Tabuleiro {
         }
         return cont;  //retorna quantas rainhas foram atacadas
     }
-	public int[] getPosition() {
+	
+    public int[] getPosition() {
 		// TODO Auto-generated method stub
 		return this.position;
 	}
+    
     public Tabuleiro expandeChildrens() {
         Tabuleiro tabFilho = new Tabuleiro();
          ArrayList<Object> arvore = null;
@@ -86,6 +78,15 @@ public class Tabuleiro {
          
         return tabFilho;
     }
+
+    /*
+     * acho q temos q gerar um filho a cada vez a função é chamada
+     * para está função ficar uniforme para todos algoritmos
+     */
+	public void gerarFilhos() {
+		// TODO Auto-generated method stub
+		
+	}
         
         
      

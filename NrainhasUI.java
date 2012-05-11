@@ -46,7 +46,7 @@ public class NrainhasUI extends JPanel {
 		private static final int ROWS = 8;
 		private static final int COLS = 8;
 
-		private static final int CELL_SIZE = 40;
+		private static final int CELL_SIZE = 60;
 		private Font _biggerFont;
 
 		public GraphicsPanel() {
@@ -73,7 +73,7 @@ public class NrainhasUI extends JPanel {
 							g.setColor(Color.white);
 						}
 						g.setFont(_biggerFont);
-						g.drawString(text, x + 10  , y + 70);
+						g.drawString(text, x +7  , y + 50);
 					}
 				}
 			}

@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 //jogador
-public class Jogador {
+public class Aestrela {
 	private List<Tabuleiro> tabuleiros;
 	private TreeMap<String,Tabuleiro>last;
 
