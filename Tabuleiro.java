@@ -3,14 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
     
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author vanderson
+/* 
+ * Esta classe possui todos os metodos necessários de um tabuleiro para resolução do problema das 8 rainhas
+ * Autores: Vanderson Oliveira,Abilio Parada e Eliane.
  */
 public class Tabuleiro {
     private int position[];
@@ -24,15 +19,15 @@ public class Tabuleiro {
     Tabuleiro() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
-    /*
+    /* Autor: Vanderson Oliveira.
      * Metodo get do numero de rainhas se atacando no tabuleiro
+     * P@r@metros: {void}
+     * Return:{int attack}
      */
     public int getAttack(){
     	return this.attack;
     }
-    
-    
-    
+   
     /*
      * Função q de avaliação
      */
@@ -59,7 +54,11 @@ public class Tabuleiro {
         }
         return cont;  //retorna quantas rainhas foram atacadas
     }
-	
+    /* Autor: Vanderson Oliveira.
+	 * Metodo que retorna o vetor com o tabuleiro. 
+	 * P@r@metros: {void}.
+	 * Return: {position}.
+	 */
     public int[] getPosition() {
 		// TODO Auto-generated method stub
 		return this.position;
@@ -69,7 +68,7 @@ public class Tabuleiro {
         Tabuleiro tabFilho = new Tabuleiro();
          ArrayList<Object> arvore = null;
          int [] vetFilho;
-         arvore.add(position);
+         arvore.add(position);//aqui tem que ser o tabFilho pois precisamos de uma lista de objtos<Tabuleiro> (filhos)
         
         //gerar uma arvore com todos os filhos primeiro para depois cada algoritmo
          //analise com cada nodo da arvore, mas qual será o tamanho dessa arvore e 
