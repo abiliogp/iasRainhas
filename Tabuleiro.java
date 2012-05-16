@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 /*
@@ -18,6 +19,8 @@ public class Tabuleiro {
 	private Tabuleiro father;
 	private int count = 0;
 
+	private static Map<int[], int[]> visited = new TreeMap<int[], int[]>();
+	
 	public Tabuleiro(int[] board) {
 		this.board = board;
 		this.father = father;
@@ -88,14 +91,17 @@ public class Tabuleiro {
 	 */
 	public int[] gerarFilho() {
 		int[] board = this.board.clone();
-		if (count >= 63) {
-			count = 0;
-		}
-		if (board[count / 8] == count % 8) {
+		do{
+			if (count >= 63) {
+				count = 0;
+			}
+			if (board[count / 8] == count % 8) {
+				count++;
+			}
+			board[count / 8] = count % 8;
 			count++;
-		}
-		board[count / 8] = count % 8;
-		count++;
+		} while(visited.containsValue(board));
+		visited.put(board, board);
 		return board;
 	}
 

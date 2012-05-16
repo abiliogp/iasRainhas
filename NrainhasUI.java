@@ -36,9 +36,9 @@ public class NrainhasUI extends JPanel {
 		rainhasUI = new GraphicsPanel();
 
 		this.setLayout(new BorderLayout());
-		this.add(controlPanel, BorderLayout.WEST);
+		this.add(controlPanel, BorderLayout.EAST);
 
-		this.add(rainhasUI, BorderLayout.EAST);
+		this.add(rainhasUI, BorderLayout.WEST);
 		
 	}
 
