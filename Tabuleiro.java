@@ -27,7 +27,6 @@ public class Tabuleiro {
 	}
 
 	public Tabuleiro(Tabuleiro father) {
-		this.board = father.gerarFilho();
 		this.father = father;
 	}
 
@@ -89,20 +88,32 @@ public class Tabuleiro {
 	 * acho q temos q gerar um filho a cada vez a função é chamada para está
 	 * função ficar uniforme para todos algoritmos
 	 */
-	public int[] gerarFilho() {
-		int[] board = this.board.clone();
+	public void gerarFilho() {
+		this.board = father.board.clone();
 		do{
-			if (count >= 63) {
-				count = 0;
+			if (father.count >= 63) {
+				father.count = 0;
 			}
-			if (board[count / 8] == count % 8) {
-				count++;
+			if (board[father.count / 8] == father.count % 8) {
+				father.count++;
 			}
-			board[count / 8] = count % 8;
-			count++;
+			board[father.count / 8] = father.count % 8;
+			father.count++;
 		} while(Main.visited.containsValue(board.toString()));
 		Main.visited.put(board.toString(), board.toString());
-		return board;
+	}
+	
+	public void gerarFilhoAleatorio() {
+		int count;
+		this.board = father.board.clone();
+		do{
+			count = (int) (Math.random()*63);
+			if (board[count / 8] == count % 8) {
+				count = (int) (Math.random()*63);
+			}
+			board[count / 8] = count % 8;
+		} while(Main.visited.containsValue(board.toString()));
+		Main.visited.put(board.toString(), board.toString());
 	}
 
 }

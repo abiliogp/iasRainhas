@@ -21,6 +21,8 @@ public class Main {
 		tab = new Tabuleiro(vet);
 		for(int i=0;i<65;i++){
 			filho = new Tabuleiro(tab);
+			filho.gerarFilho();
+			filho.gerarFilhoAleatorio();
 		}
 		/*
 		JFrame window = new JFrame("N-Rainhas IA");
