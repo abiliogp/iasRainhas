@@ -19,7 +19,7 @@ public class Tabuleiro {
 	private Tabuleiro father;
 	private int count = 0;
 
-	private static Map<int[], int[]> visited = new TreeMap<int[], int[]>();
+	
 	
 	public Tabuleiro(int[] board) {
 		this.board = board;
@@ -100,8 +100,8 @@ public class Tabuleiro {
 			}
 			board[count / 8] = count % 8;
 			count++;
-		} while(visited.containsValue(board));
-		visited.put(board, board);
+		} while(Main.visited.containsValue(board.toString()));
+		Main.visited.put(board.toString(), board.toString());
 		return board;
 	}
 

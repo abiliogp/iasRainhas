@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 
@@ -10,6 +12,8 @@ import javax.swing.JFrame;
  *			Eliane Siegert
  */
 public class Main {
+	
+	public static Map<String, String> visited = new TreeMap<String, String>();
 	
 	public static void main(String[] args) throws IOException {
 		int [] vet = {0,1,2,3,4,5,6,7};
