@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.xml.bind.ParseConversionEvent;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -14,16 +16,15 @@ import java.util.TreeMap;
  * @author vanderson
  */
 public class Tabuleiro {
-	private int[] board = new int[8];
+	private char[] board = new char[8];
 	private int attack = -1;
 	private Tabuleiro father;
 	private int count = 0;
 
 	
 	
-	public Tabuleiro(int[] board) {
+	public Tabuleiro(char[] board) {
 		this.board = board;
-		this.father = father;
 	}
 
 	public Tabuleiro(Tabuleiro father) {
@@ -97,10 +98,10 @@ public class Tabuleiro {
 			if (board[father.count / 8] == father.count % 8) {
 				father.count++;
 			}
-			board[father.count / 8] = father.count % 8;
+			board[father.count / 8] =  String.valueOf((father.count % 8)).charAt(0);
 			father.count++;
-		} while(Main.visited.containsValue(board.toString()));
-		Main.visited.put(board.toString(), board.toString());
+		} while(Main.visited.containsKey(new String(board)));
+		Main.visited.put(new String(board), this);
 	}
 	
 	public void gerarFilhoAleatorio() {
@@ -111,9 +112,9 @@ public class Tabuleiro {
 			if (board[count / 8] == count % 8) {
 				count = (int) (Math.random()*63);
 			}
-			board[count / 8] = count % 8;
-		} while(Main.visited.containsValue(board.toString()));
-		Main.visited.put(board.toString(), board.toString());
+			board[count / 8] = String.valueOf((count % 8)).charAt(0);;
+		} while(Main.visited.containsKey(new String(board)));
+		Main.visited.put(new String(board), this);
 	}
 
 }

@@ -13,17 +13,20 @@ import javax.swing.JFrame;
  */
 public class Main {
 	
-	public static Map<String, String> visited = new TreeMap<String, String>();
+	public static Map<String, Tabuleiro> visited = new TreeMap<String, Tabuleiro>();
 	
 	public static void main(String[] args) throws IOException {
-		int [] vet = {0,1,2,3,4,5,6,7};
+		char [] vet = {'0','1','2','3','4','5','6','7'};
+		
 		Tabuleiro tab ,filho;
 		tab = new Tabuleiro(vet);
+		visited.put(new String(vet), tab);
 		for(int i=0;i<65;i++){
 			filho = new Tabuleiro(tab);
 			filho.gerarFilho();
-			filho.gerarFilhoAleatorio();
+			//filho.gerarFilhoAleatorio();
 		}
+		
 		/*
 		JFrame window = new JFrame("N-Rainhas IA");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
