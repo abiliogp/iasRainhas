@@ -1,10 +1,4 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import javax.xml.bind.ParseConversionEvent;
 
 /*
  * To change this template, choose Tools | Templates
@@ -16,16 +10,19 @@ import javax.xml.bind.ParseConversionEvent;
  * @author vanderson
  */
 public class Tabuleiro {
-	private char[] board = new char[8];
+	private int[] board = new int[8];
 	private int attack = -1;
 	private Tabuleiro father;
 	private int count = 0;
 
 	
 	
-	public Tabuleiro(char[] board) {
+	public Tabuleiro(int[] board, Tabuleiro father) {
 		this.board = board;
+		this.father = father;
+		this.attack=this.avalia_rainhas();
 	}
+	
 
 	public Tabuleiro(Tabuleiro father) {
 		this.father = father;
@@ -71,7 +68,7 @@ public class Tabuleiro {
 	}
 
 	public Tabuleiro expandeChildrens() {
-		Tabuleiro tabFilho = new Tabuleiro();
+		Tabuleiro tabFilho = null;
 		ArrayList<Object> arvore = null;
 		int[] vetFilho;
 		arvore.add(board);
@@ -85,6 +82,7 @@ public class Tabuleiro {
 		return tabFilho;
 	}
 
+	
 	/*
 	 * acho q temos q gerar um filho a cada vez a função é chamada para está
 	 * função ficar uniforme para todos algoritmos
@@ -98,11 +96,13 @@ public class Tabuleiro {
 			if (board[father.count / 8] == father.count % 8) {
 				father.count++;
 			}
-			board[father.count / 8] =  String.valueOf((father.count % 8)).charAt(0);
+			board[father.count / 8] = father.count % 8;
 			father.count++;
-		} while(Main.visited.containsKey(new String(board)));
-		Main.visited.put(new String(board), this);
+		} while(Main.visited.containsValue(this.convert(board)));
+		Main.visited.put(this.convert(board), this.convert(board));
 	}
+	
+
 	
 	public void gerarFilhoAleatorio() {
 		int count;
@@ -112,9 +112,82 @@ public class Tabuleiro {
 			if (board[count / 8] == count % 8) {
 				count = (int) (Math.random()*63);
 			}
-			board[count / 8] = String.valueOf((count % 8)).charAt(0);;
-		} while(Main.visited.containsKey(new String(board)));
-		Main.visited.put(new String(board), this);
+			board[count / 8] = count % 8;
+		} while(Main.visited.containsValue(this.convert(board)));
+		Main.visited.put(this.convert(board), this.convert(board));
+	}
+	/*
+	 * classe de teste de saida
+	 */
+	public void printResult(Tabuleiro novo) {
+		while (novo.getFather() != null) {
+			print(novo.getBoard());
+			novo = novo.getFather();
+		}
+		print(novo.getBoard());
+		return;
 	}
 
+	private Tabuleiro getFather() {
+		
+		return this.father;
+	}
+	// Substituir a interface aqui
+	private static void print(int[] board) {
+		for (int i = 0; i < 9; i += 3) {
+			System.out.println(board[i] + "  " + board[i + 1] + "  "
+					+ board[i + 2]);
+		}
+		System.out.println(".......");
+	}
+
+
+	/* Autor: Vanderson Oliveira.
+	 * Metodo que retona o vetor com as posições.
+	 * NÃO APAGa TO USANDO !!!
+	 * P@r@metros: {void}.
+	 * Return: {INT[]}.
+	 */
+	public int[] getBoard() {
+		return board;
+	}
+	
+
+	/* Autor: Vanderson Oliveira.
+	 * Metodo que retona o vetor com as posições do novo filho
+	 * PRECISO disso pois tenho uma fila de PRIORIDADE não posso usar a visited.
+	 * NÃO APAGa TO USANDO !!!
+	 * P@r@metros: {void}.
+	 * Return: {INT[]}.
+	 */
+	public int[] gerarFilhoEstrela() {
+			
+			int[]board2 = board.clone();
+			if (this.count >= 63) {
+				this.count = 0;
+			}
+			if (board2[this.count / 8] == this.count % 8) {
+				this.count++;
+			}
+			board2[this.count / 8] = this.count % 8;
+			this.count++;
+			String s=this.convert(board2);
+			if(Main.visited.containsValue(s)){
+				return null;//o filho ja existe então mando ele criar outro no estrela.estendeCaminhos
+			}else{
+				//Main.visited.put(s, s);
+				return board2;//retorna o filho para adicionar a fila de prioridade
+			}
+		
+	}
+	public String convert(int[]aux){
+		String aus="";
+		for(int i=0;i<8;i++){
+		aus=aus.concat(String.valueOf(aux[i]));
+		}
+		return aus;
+	}
+
+
+	
 }
