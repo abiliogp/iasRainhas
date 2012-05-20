@@ -169,6 +169,10 @@ public class NrainhasUI extends JPanel {
 
 	public class AestrelaExc implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if(resultado != null){
+				resultado.clear();
+				ipasso = 0;
+			}
 			if(tabuleiroInicial == null){
 				label.setText("Sem Entrada Inicial!");
 				return;
@@ -185,13 +189,17 @@ public class NrainhasUI extends JPanel {
 			nvisitados = Tabuleiro.visited.size();
 			
 			label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
-			
+	
 			Tabuleiro.visited.clear();
 		}
 	}
 
 	public class EncostaExc implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if(resultado != null){
+				resultado.clear();
+				ipasso = 0;
+			}
 			if(tabuleiroInicial == null){
 				label.setText("Sem Entrada Inicial!");
 				return;
@@ -208,13 +216,17 @@ public class NrainhasUI extends JPanel {
 			nvisitados = Tabuleiro.visited.size();
 			
 			label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
-			
+	
 			Tabuleiro.visited.clear();
 		}
 	}
 
 	public class TemperaExc implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			if(resultado != null){
+				resultado.clear();
+				ipasso = 0;
+			}
 			if(tabuleiroInicial == null){
 				label.setText("Sem Entrada Inicial!");
 				return;
@@ -239,6 +251,10 @@ public class NrainhasUI extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			if(tabuleiroInicial == null){
 				label.setText("Sem Entrada Inicial!");
+				return;
+			}
+			if(tabuleiroResultado == null){
+				label.setText("Escolha o Algoritmo!");
 				return;
 			}
 			if(ipasso == resultado.size()){
