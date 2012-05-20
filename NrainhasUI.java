@@ -44,7 +44,7 @@ public class NrainhasUI extends JPanel {
 		aestrela.addActionListener(new AestrelaExc());
 
 		encosta = new JButton("Encosta");
-		encosta.addActionListener(new Encosta());
+		encosta.addActionListener(new EncostaExc());
 
 		tempera = new JButton("Tempera");
 		tempera.addActionListener(new TemperaExc());
@@ -154,6 +154,13 @@ public class NrainhasUI extends JPanel {
 			novo = novo.getFather();
 		}
 	}
+
+	public void geraResultado(ArrayList<Tabuleiro> array ) {
+		resultado = new ArrayList<Tabuleiro>();
+		for(int i = 0 ; i < array.size() ; i++){
+			resultado.add(i, array.get(array.size() - i -1));
+		}
+	}
 	
 	/*
 	 * Botões de ação do jogo
@@ -183,9 +190,26 @@ public class NrainhasUI extends JPanel {
 		}
 	}
 
-	public class Encosta implements ActionListener {
+	public class EncostaExc implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
+			if(tabuleiroInicial == null){
+				label.setText("Sem Entrada Inicial!");
+				return;
+			}
+			//Eliane só mude a chamada do algoritmo para Encosta
+			Aestrela aestrela = new Aestrela(tabuleiroInicial);
+			tabuleiroResultado = aestrela.run();
+			
+			rainhasModel.reset(tabuleiroResultado.getBoard());
+		    rainhasUI.repaint();
+			
+			geraResultado();
+			npassos = resultado.size();
+			nvisitados = Tabuleiro.visited.size();
+			
+			label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
+			
+			Tabuleiro.visited.clear();
 		}
 	}
 
@@ -197,12 +221,11 @@ public class NrainhasUI extends JPanel {
 			}
 			
 			Tempera tempera = new Tempera(tabuleiroInicial);
-			tabuleiroResultado = tempera.executa();
-			
+			geraResultado(tempera.executa());
+			tabuleiroResultado = resultado.get(resultado.size()-1);
 			rainhasModel.reset(tabuleiroResultado.getBoard());
 		    rainhasUI.repaint();
 			
-			geraResultado();
 			npassos = resultado.size();
 			nvisitados = Tabuleiro.visited.size();
 			

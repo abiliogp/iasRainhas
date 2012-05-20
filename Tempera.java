@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 
 public class Tempera {
 	
+	ArrayList<Tabuleiro> resultado = new ArrayList<Tabuleiro>();
 	Tabuleiro atual;
 	Tabuleiro proximo;
 	Tabuleiro melhor;
@@ -13,7 +16,7 @@ public class Tempera {
 		this.t = atual.getAttack();
 	}
 	
-	public Tabuleiro executa(){
+	public ArrayList executa(){
 		int avalia; 
 		double p;
 		do{
@@ -24,6 +27,7 @@ public class Tempera {
 				atual = proximo;
 				if(atual.getAttack() <= melhor.getAttack() ){
 					melhor = atual;
+					resultado.add(0, melhor);
 					t = melhor.getAttack();
 				}
 			} else{
@@ -35,7 +39,7 @@ public class Tempera {
 			
 			
 		}while(!(atual.getAttack() == 0));
-		return melhor;
+		return resultado;
 	}
 	
 
