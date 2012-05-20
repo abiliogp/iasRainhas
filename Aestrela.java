@@ -31,7 +31,7 @@ public class Aestrela {
 		while(!apesquisar.isEmpty()){
 			aux=this.getBetter();//remove o melhor da fila de prioridade
 			String s=aux.convert(aux.getBoard());
-			Main.visited.put(s,s);//coloca no tremap de visitados
+			Tabuleiro.visited.put(s,s);//coloca no tremap de visitados
 			if(aux.getAttack()==0){
 				return aux;
 			}else{

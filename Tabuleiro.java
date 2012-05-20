@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 /*
  * To change this template, choose Tools | Templates
@@ -10,6 +12,8 @@ import java.util.ArrayList;
  * @author vanderson
  */
 public class Tabuleiro {
+	public static Map<String, String> visited = new TreeMap<String, String>();
+	
 	private int[] board = new int[8];
 	private int attack = -1;
 	private Tabuleiro father;
@@ -30,6 +34,10 @@ public class Tabuleiro {
 		this.father = father;
 	}
 
+	public Tabuleiro getFather() {
+		return this.father;
+	}
+	
 	/*
 	 * Metodo get do numero de rainhas se atacando no tabuleiro
 	 */
@@ -101,8 +109,8 @@ public class Tabuleiro {
 			board[father.count / 8] = father.count % 8;
 			father.count++;
 			str = this.convert(board);			
-		} while (Main.visited.containsKey(str));
-		Main.visited.put(str, str);
+		} while (visited.containsKey(str));
+		visited.put(str, str);
 	}
 
 	public void gerarFilhoAleatorio() {
@@ -116,8 +124,8 @@ public class Tabuleiro {
 			}
 			board[count / 8] = count % 8;
 			str = this.convert(board);
-		} while (Main.visited.containsKey(str));
-		Main.visited.put(str, str);
+		} while (visited.containsKey(str));
+		visited.put(str, str);
 	}
 
 	/*
@@ -132,10 +140,7 @@ public class Tabuleiro {
 		return;
 	}
 
-	private Tabuleiro getFather() {
-
-		return this.father;
-	}
+	
 
 	// Substituir a interface aqui
 	private static void print(int[] board) {
@@ -171,7 +176,7 @@ public class Tabuleiro {
 		board2[this.count / 8] = this.count % 8;
 		this.count++;
 		String s = this.convert(board2);
-		if (Main.visited.containsValue(s)) {
+		if (visited.containsValue(s)) {
 			return null;// o filho ja existe então mando ele criar outro no
 						// estrela.estendeCaminhos
 		} else {

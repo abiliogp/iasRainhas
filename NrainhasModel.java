@@ -30,8 +30,9 @@ public class NrainhasModel {
     }
     
     public void reset(int[] cells) {
+    	reset();
         for (int r = 0; r < cells.length; r++) {
-            contents[r][cells[r]] = new Tile(r, cells[r], "\u2655" );
+            contents[cells[r]][r] = new Tile(r, cells[r], "\u2655" );
         }
     }
     
