@@ -13,15 +13,18 @@ import javax.swing.JFrame;
  */
 public class Main {
 	
-	public static Map<String, Tabuleiro> visited = new TreeMap<String, Tabuleiro>();
+	public static Map<String, String> visited = new TreeMap<String, String>();
 	
 	public static void main(String[] args) throws IOException {
-		char [] vet = {'0','1','2','3','4','5','6','7'};
+		int [] vet = {0,1,2,3,4,5,6,7};
 		
 		Tabuleiro tab ,filho;
 		tab = new Tabuleiro(vet);
-		visited.put(new String(vet), tab);
-		for(int i=0;i<65;i++){
+		visited.put(new String(String.valueOf(vet)), new String(String.valueOf(vet)));
+		
+		Tempera tempera = new Tempera(tab);
+		tab = tempera.tempera();
+		/*for(int i=0;i<64;i++){
 			filho = new Tabuleiro(tab);
 			filho.gerarFilho();
 			//filho.gerarFilhoAleatorio();
