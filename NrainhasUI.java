@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -5,287 +6,279 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 /*
- * Cria o painel de interface com o usuário
- *      com botões e quadro de jogo
+ * Cria o painel de interface com o usuário com botões e quadro de jogo
  */
 public class NrainhasUI extends JPanel {
 
-	private int entrada [] = new int[8];
-	private int npassos, nvisitados, ipasso = 0;
-	private Tabuleiro tabuleiroInicial, tabuleiroResultado;
-	private ArrayList<Tabuleiro> resultado;
-	
-	private GraphicsPanel rainhasUI;
-	private NrainhasModel rainhasModel;
+    private int entrada[] = new int[8];
+    private int npassos, nvisitados, ipasso = 0;
+    private Tabuleiro tabuleiroInicial, tabuleiroResultado;
+    private ArrayList<Tabuleiro> resultado;
+    private GraphicsPanel rainhasUI;
+    private NrainhasModel rainhasModel;
+    private JPanel controlPanel;
+    private JPanel statusBar;
+    private JButton tempera;
+    private JButton aestrela;
+    private JButton encosta;
+    private JButton passos;
+    private JButton anterior;
+    private JLabel label;
+    private JTextField text;
+    private JButton iniciar;
 
-	private JPanel controlPanel;
-	private JPanel statusBar;
+    public NrainhasUI() {
+        rainhasModel = new NrainhasModel();
 
-	private JButton tempera;
-	private JButton aestrela;
-	private JButton encosta;
-	private JButton passos;
-	private JButton anterior;
+        iniciar = new JButton("Vai!");
+        iniciar.addActionListener(new Iniciar());
 
-	private JLabel label;
-	private JTextField text;
-	private JButton iniciar;
-
-	public NrainhasUI() {
-		rainhasModel = new NrainhasModel();
-
-		iniciar = new JButton("Vai!");
-		iniciar.addActionListener(new Iniciar());
-
-		text = new JTextField("01234567");
+        text = new JTextField("01234567");
 
 
-		aestrela = new JButton("A *");
-		aestrela.addActionListener(new AestrelaExc());
+        aestrela = new JButton("A *");
+        aestrela.addActionListener(new AestrelaExc());
 
-		encosta = new JButton("Encosta");
-		encosta.addActionListener(new EncostaExc());
+        encosta = new JButton("Encosta");
+        encosta.addActionListener(new EncostaExc());
 
-		tempera = new JButton("Tempera");
-		tempera.addActionListener(new TemperaExc());
+        tempera = new JButton("Tempera");
+        tempera.addActionListener(new TemperaExc());
 
-		passos = new JButton("Passos");
-		passos.addActionListener(new Passos());
+        passos = new JButton("Passos");
+        passos.addActionListener(new Passos());
 
-		controlPanel = new JPanel();
-		controlPanel.setLayout(new FlowLayout());
+        controlPanel = new JPanel();
+        controlPanel.setLayout(new FlowLayout());
 
-		controlPanel.add(text);
-		controlPanel.add(iniciar);
-		controlPanel.add(aestrela);
-		controlPanel.add(encosta);
-		controlPanel.add(tempera);
-		//controlPanel.add(anterior);
-		controlPanel.add(passos);
+        controlPanel.add(text);
+        controlPanel.add(iniciar);
+        controlPanel.add(aestrela);
+        controlPanel.add(encosta);
+        controlPanel.add(tempera);
+        controlPanel.add(passos);
 
-		label = new JLabel("De a entrada e clique em Vai!");
+        label = new JLabel("De a entrada e clique em Vai!");
 
-		statusBar = new JPanel();
-		statusBar.setLayout(new FlowLayout());
+        statusBar = new JPanel();
+        statusBar.setLayout(new FlowLayout());
 
-		statusBar.add(label);
-		
-		rainhasUI = new GraphicsPanel();
+        statusBar.add(label);
 
-		this.setLayout(new BorderLayout());
-		this.add(controlPanel, BorderLayout.NORTH);
+        rainhasUI = new GraphicsPanel();
 
-		this.add(rainhasUI, BorderLayout.CENTER);
-		this.add(statusBar, BorderLayout.SOUTH);
-	}
+        this.setLayout(new BorderLayout());
+        this.add(controlPanel, BorderLayout.NORTH);
 
-	public class GraphicsPanel extends JPanel implements MouseListener {
-		private static final int ROWS = 8;
-		private static final int COLS = 8;
+        this.add(rainhasUI, BorderLayout.CENTER);
+        this.add(statusBar, BorderLayout.SOUTH);
+    }
 
-		private static final int CELL_SIZE = 60;
-		private Font _biggerFont;
+    public class GraphicsPanel extends JPanel implements MouseListener {
 
-		public GraphicsPanel() {
-			_biggerFont = new Font("", Font.PLAIN, CELL_SIZE - 10);
-			this.setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE
-					* ROWS));
-			this.setBackground(Color.black);
-		}
+        private static final int ROWS = 8;
+        private static final int COLS = 8;
+        private static final int CELL_SIZE = 60;
+        private Font _biggerFont;
 
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			for (int r = 0; r < ROWS; r++) {
-				for (int c = 0; c < COLS; c++) {
-					int x = c * CELL_SIZE;
-					int y = r * CELL_SIZE;
-					String text = rainhasModel.getFace(r, c);
-					if (text != null) {
-						if ((r + c) % 2 == 0) {
-							g.setColor(Color.white);
-							g.fillRect(x + 1, y + 1, CELL_SIZE - 3,
-									CELL_SIZE - 3);
-							g.setColor(Color.black);
-						} else {
-							g.setColor(Color.black);
-							g.fillRect(x + 1, y + 1, CELL_SIZE - 3,
-									CELL_SIZE - 3);
-							g.setColor(Color.white);
-						}
-						g.setFont(_biggerFont);
-						g.drawString(text, x + 7, y + 50);
-					}
-				}
-			}
-		}
+        public GraphicsPanel() {
+            _biggerFont = new Font("", Font.PLAIN, CELL_SIZE - 10);
+            this.setPreferredSize(new Dimension(CELL_SIZE * COLS, CELL_SIZE
+                    * ROWS));
+            this.setBackground(Color.black);
+        }
 
-		public void mousePressed(MouseEvent e) {
-		}
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            for (int r = 0; r < ROWS; r++) {
+                for (int c = 0; c < COLS; c++) {
+                    int x = c * CELL_SIZE;
+                    int y = r * CELL_SIZE;
+                    String text = rainhasModel.getFace(r, c);
+                    if (text != null) {
+                        if ((r + c) % 2 == 0) {
+                            g.setColor(Color.white);
+                            g.fillRect(x + 1, y + 1, CELL_SIZE - 3,
+                                    CELL_SIZE - 3);
+                            g.setColor(Color.black);
+                        } else {
+                            g.setColor(Color.black);
+                            g.fillRect(x + 1, y + 1, CELL_SIZE - 3,
+                                    CELL_SIZE - 3);
+                            g.setColor(Color.white);
+                        }
+                        g.setFont(_biggerFont);
+                        g.drawString(text, x + 7, y + 50);
+                    }
+                }
+            }
+        }
 
-		public void mouseClicked(MouseEvent e) {
-		}
+        public void mousePressed(MouseEvent e) {
+        }
 
-		public void mouseReleased(MouseEvent e) {
-		}
+        public void mouseClicked(MouseEvent e) {
+        }
 
-		public void mouseEntered(MouseEvent e) {
-		}
+        public void mouseReleased(MouseEvent e) {
+        }
 
-		public void mouseExited(MouseEvent e) {
-		}
-	}
+        public void mouseEntered(MouseEvent e) {
+        }
 
-	public int[] convertStringIntArray(char[] sarray)  {
-		if (sarray != null) {
-			int intarray[] = new int[sarray.length];
-			for (int i = 0; i < sarray.length; i++) {
-				intarray[i] = Character.getNumericValue(sarray[i]);
-			}
-			return intarray;
-		}
-		return null;
-	}
+        public void mouseExited(MouseEvent e) {
+        }
+    }
 
-	public void geraResultado() {
-		resultado = new ArrayList<Tabuleiro>();
-		Tabuleiro novo = this.tabuleiroResultado;
-		while (novo.getFather() != null) {
-			resultado.add(0, novo);
-			novo = novo.getFather();
-		}
-	}
+    public int[] convertStringIntArray(char[] sarray) {
+        if (sarray != null) {
+            int intarray[] = new int[sarray.length];
+            for (int i = 0; i < sarray.length; i++) {
+                intarray[i] = Character.getNumericValue(sarray[i]);
+            }
+            return intarray;
+        }
+        return null;
+    }
 
-	public void geraResultado(ArrayList<Tabuleiro> array ) {
-		resultado = new ArrayList<Tabuleiro>();
-		for(int i = 0 ; i < array.size() ; i++){
-			resultado.add(i, array.get(array.size() - i -1));
-		}
-	}
-	
-	/*
-	 * Botões de ação do jogo
-	 */
-	
+    public void geraResultado() {
+        resultado = new ArrayList<Tabuleiro>();
+        Tabuleiro novo = this.tabuleiroResultado;
+        while (novo.getFather() != null) {
+            resultado.add(0, novo);
+            novo = novo.getFather();
+        }
+    }
 
-	public class AestrelaExc implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if(resultado != null){
-				resultado.clear();
-				ipasso = 0;
-			}
-			if(tabuleiroInicial == null){
-				label.setText("Sem Entrada Inicial!");
-				return;
-			}
-			
-			Aestrela aestrela = new Aestrela(tabuleiroInicial);
-			tabuleiroResultado = aestrela.run();
-			
-			rainhasModel.reset(tabuleiroResultado.getBoard());
-		    rainhasUI.repaint();
-			
-			geraResultado();
-			npassos = resultado.size();
-			nvisitados = Tabuleiro.visited.size();
-			
-			label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
-	
-			Tabuleiro.visited.clear();
-		}
-	}
+    public void geraResultado(ArrayList<Tabuleiro> array) {
+        resultado = new ArrayList<Tabuleiro>();
+        for (int i = 0; i < array.size(); i++) {
+            resultado.add(i, array.get(array.size() - i - 1));
+        }
+    }
 
-	public class EncostaExc implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if(resultado != null){
-				resultado.clear();
-				ipasso = 0;
-			}
-			if(tabuleiroInicial == null){
-				label.setText("Sem Entrada Inicial!");
-				return;
-			}
-			//Eliane só mude a chamada do algoritmo para Encosta
-			hill_climbing encosta = new hill_climbing(tabuleiroInicial);
-                        tabuleiroResultado = encosta.run();
-                        
-                        Aestrela aestrela = new Aestrela(tabuleiroInicial);
-			tabuleiroResultado = aestrela.run();
-			
-			rainhasModel.reset(tabuleiroResultado.getBoard());
-		    rainhasUI.repaint();
-			
-			geraResultado();
-			npassos = resultado.size();
-			nvisitados = Tabuleiro.visited.size();
-			
-			label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
-	
-			Tabuleiro.visited.clear();
-		}
-	}
+    /*
+     * Botões de ação do jogo
+     */
+    public class AestrelaExc implements ActionListener {
 
-	public class TemperaExc implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if(resultado != null){
-				resultado.clear();
-				ipasso = 0;
-			}
-			if(tabuleiroInicial == null){
-				label.setText("Sem Entrada Inicial!");
-				return;
-			}
-			
-			Tempera tempera = new Tempera(tabuleiroInicial);
-			geraResultado(tempera.executa());
-			tabuleiroResultado = resultado.get(resultado.size()-1);
-			rainhasModel.reset(tabuleiroResultado.getBoard());
-		    rainhasUI.repaint();
-			
-			npassos = resultado.size();
-			nvisitados = Tabuleiro.visited.size();
-			
-			label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
-			
-			Tabuleiro.visited.clear();
-		}
-	}
-	
-	public class Passos implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if(tabuleiroInicial == null){
-				label.setText("Sem Entrada Inicial!");
-				return;
-			}
-			if(tabuleiroResultado == null){
-				label.setText("Escolha o Algoritmo!");
-				return;
-			}
-			if(ipasso == resultado.size()){
-				ipasso = 0;
-			}
-			int ataques = resultado.get(ipasso).getAttack();
-			rainhasModel.reset(resultado.get(ipasso).getBoard());
-		    rainhasUI.repaint();
-			ipasso++;
-			label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + ipasso + "º Passo || Ataques: " + ataques);
-		}
-	}
+        public void actionPerformed(ActionEvent e) {
+            if (resultado != null) {
+                resultado.clear();
+                ipasso = 0;
+            }
+            if (tabuleiroInicial == null) {
+                label.setText("Sem Entrada Inicial!");
+                return;
+            }
 
-	
+            Aestrela aestrela = new Aestrela(tabuleiroInicial);
+            tabuleiroResultado = aestrela.run();
 
-	public class Iniciar implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if (!text.getText().isEmpty()) {
-				if (text.getText().length() != 8) {
-					label.setText("Entrada Inválida!");
-					return;
-				}
-			    entrada = convertStringIntArray(text.getText().toCharArray());
-			    tabuleiroInicial = new Tabuleiro(entrada);
-			    rainhasModel.reset(entrada);
-			    label.setText("Escolha o Algoritmo!");
-				rainhasUI.repaint();
-			}
-		}
-	}
+            rainhasModel.reset(tabuleiroResultado.getBoard());
+            rainhasUI.repaint();
+
+            geraResultado();
+            npassos = resultado.size();
+            nvisitados = Tabuleiro.visited.size();
+
+            label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
+
+            Tabuleiro.visited.clear();
+        }
+    }
+
+    public class EncostaExc implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            if (resultado != null) {
+                resultado.clear();
+                ipasso = 0;
+            }
+            if (tabuleiroInicial == null) {
+                label.setText("Sem Entrada Inicial!");
+                return;
+            }
+
+            hill_climbing encosta = new hill_climbing(tabuleiroInicial);
+            tabuleiroResultado = encosta.run();
+
+            rainhasModel.reset(tabuleiroResultado.getBoard());
+            rainhasUI.repaint();
+
+            geraResultado();
+            npassos = resultado.size();
+            nvisitados = Tabuleiro.visited.size();
+
+            label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
+
+            Tabuleiro.visited.clear();
+        }
+    }
+
+    public class TemperaExc implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            if (resultado != null) {
+                resultado.clear();
+                ipasso = 0;
+            }
+            if (tabuleiroInicial == null) {
+                label.setText("Sem Entrada Inicial!");
+                return;
+            }
+
+            Tempera tempera = new Tempera(tabuleiroInicial);
+            geraResultado(tempera.executa());
+            tabuleiroResultado = resultado.get(resultado.size() - 1);
+            rainhasModel.reset(tabuleiroResultado.getBoard());
+            rainhasUI.repaint();
+
+            npassos = resultado.size();
+            nvisitados = Tabuleiro.visited.size();
+
+            label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + npassos + "º Passo || Ataques: 0");
+
+            Tabuleiro.visited.clear();
+        }
+    }
+
+    public class Passos implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            if (tabuleiroInicial == null) {
+                label.setText("Sem Entrada Inicial!");
+                return;
+            }
+            if (tabuleiroResultado == null) {
+                label.setText("Escolha o Algoritmo!");
+                return;
+            }
+            if (ipasso == resultado.size()) {
+                ipasso = 0;
+            }
+            int ataques = resultado.get(ipasso).getAttack();
+            rainhasModel.reset(resultado.get(ipasso).getBoard());
+            rainhasUI.repaint();
+            ipasso++;
+            label.setText("Visitados: " + nvisitados + " || Passos: " + npassos + " || " + ipasso + "º Passo || Ataques: " + ataques);
+        }
+    }
+
+    public class Iniciar implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            if (!text.getText().isEmpty()) {
+                if (text.getText().length() != 8) {
+                    label.setText("Entrada Inválida!");
+                    return;
+                }
+                entrada = convertStringIntArray(text.getText().toCharArray());
+                tabuleiroInicial = new Tabuleiro(entrada);
+                rainhasModel.reset(entrada);
+                label.setText("Escolha o Algoritmo!");
+                rainhasUI.repaint();
+            }
+        }
+    }
 }
