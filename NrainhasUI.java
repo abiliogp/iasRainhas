@@ -205,7 +205,10 @@ public class NrainhasUI extends JPanel {
 				return;
 			}
 			//Eliane só mude a chamada do algoritmo para Encosta
-			Aestrela aestrela = new Aestrela(tabuleiroInicial);
+			hill_climbing encosta = new hill_climbing(tabuleiroInicial);
+                        tabuleiroResultado = encosta.run();
+                        
+                        Aestrela aestrela = new Aestrela(tabuleiroInicial);
 			tabuleiroResultado = aestrela.run();
 			
 			rainhasModel.reset(tabuleiroResultado.getBoard());

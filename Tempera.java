@@ -36,7 +36,7 @@ public class Tempera {
 					atual = proximo;
 				}
 			}
-			
+
 			
 		}while(!(atual.getAttack() == 0));
 		return resultado;

@@ -9,20 +9,27 @@
  */
 public class hill_climbing {
     
-    private Tabuleiro tabAtual = new Tabuleiro();
-    private Tabuleiro tabProximo = new Tabuleiro();
+    Tabuleiro tabAtual;
+    Tabuleiro tabProximo;
     
-    public Tabuleiro hill_climbing(){
+    public hill_climbing(Tabuleiro atual){
+        this.tabAtual = atual;
         
+    }
+    
+    public Tabuleiro run(){
+        int valor1, valor2;
         for(;;){
-            tabProximo = tabAtual.expandeChildrens();
-            int valor1 = tabAtual.avalia_rainhas();
-            int valor2 = tabProximo.avalia_rainhas();
+            tabProximo = new Tabuleiro(tabAtual);
+            tabProximo.gerarFilhoAleatorio();
+            valor1 = tabAtual.getAttack();
+            valor2 = tabProximo.getAttack();
             if(valor1<valor2){
                 return tabAtual;
             }
             tabAtual = tabProximo;
         }
     }
+
    
 }
